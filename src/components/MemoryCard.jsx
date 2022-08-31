@@ -1,8 +1,8 @@
 import React from 'react';
 import './MemoryCard.css';
 class MemoryCard extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 			this.state = { isFlipped: false};
 	}
 
@@ -10,7 +10,7 @@ class MemoryCard extends React.Component {
 		this.setState({isFlipped: !this.state.isFlipped});
 	}
 	render() {
-		const memoryCardInnerClass = this.state.isFlipped ? "MemoryCardInner flipped" : "MemoryCardInner";
+		const memoryCardInnerClass = this.props.isFlipped ? "MemoryCardInner flipped" : "MemoryCardInner";
 		return (
 			<div className='MemoryCard' onClick={this.clickHandler.bind(this)}>
 			<div className={memoryCardInnerClass}>
@@ -18,7 +18,7 @@ class MemoryCard extends React.Component {
 				<img src='dcLogo.jpeg'></img>
 			</div>
 			<div className='MemoryCardFront'>
-				
+				{this.props.symbol}
 			</div>
 			</div>
 			</div>
