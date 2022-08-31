@@ -2,21 +2,21 @@ import React from 'react';
 import './App.css';
 import MemoryCard from "./components/MemoryCard";
 
-
 let generateDeck = () => {
   let symbols = ['∆', 'ß', '£', '§', '•', '$', '+', 'ø']
+  let deck = [];
+  
   for (let i = 0; i < 16; i++) {
-
-    let deck = [];
-
     let card = {
       isFlipped: false,
       symbol: symbols[i % 8]
     }
     deck.push(card);
+    console.log(deck);
     shuffle(deck)
-    return deck;
+
   }
+  return deck;
 
 
 }
@@ -33,7 +33,9 @@ function shuffle(a) {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    // this.state =  {generateDeck()}
+    this.state = {
+      deck: generateDeck()
+    }
   }
   render() {
     return (

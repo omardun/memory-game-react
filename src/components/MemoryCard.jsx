@@ -18,7 +18,7 @@ class MemoryCard extends React.Component {
 				<img src='dcLogo.jpeg'></img>
 			</div>
 			<div className='MemoryCardFront'>
-				∆
+				
 			</div>
 			</div>
 			</div>
