@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import MemoryCard from "./components/MemoryCard";
 
+
+// Deck function
 let generateDeck = () => {
   let symbols = ['∆', 'ß', '£', '§', '•', '$', '+', 'ø']
   let deck = [];
@@ -11,19 +13,14 @@ let generateDeck = () => {
       isFlipped: false,
       symbol: symbols[i % 8]
     }
-    console.log(card);
-
+    // console.log(card);
     deck.push(card);
-    // console.log(deck);
-
     shuffle(deck)
-
   }
   return deck;
-
-
 }
 
+//shuffle function
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -32,39 +29,68 @@ function shuffle(a) {
   return a;
 }
 
-
+//Class App
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deck: generateDeck()
+      deck: generateDeck(),
+      pickedCards: []
     }
 
   }
 
   pickCard(cardIndex) {
-    if (newPickedCards.length === 2) {
-      const card1Index = [0]
-      const card2Index = [newPickedCards(1)]
-    }
     if (this.state.deck[cardIndex].isFlipped) {
       return;
     }
     const cardToFlip = { ...this.state.deck[cardIndex] }
     cardToFlip.isFlipped = true;
-    let newDeck = this.state.deck.map((card,index) => {
+    let newDeck = this.state.deck.map((card, index) => {
       if (cardIndex === index) {
-        return cardToFlip ;
+        return cardToFlip;
       }
       return card;
-    } );
+    });
     let newPickedCards = this.state.pickedCards.concat(cardIndex);
+
+    if (newPickedCards.length === 2) {
+      const card1Index = newPickedCards[0];
+      const card2Index = newPickedCards[1];
+      const firstCard = newDeck[card1Index]
+      const secondCard = newDeck[card2Index]
+
+
+
+      if (firstCard.symbol != secondCard.symbol) {
+        setTimeout(this.unflipCards.bind(this, card1Index, card2Index), 1000)
+      }
+      newPickedCards = []
+
+    }
+    //pick card state
     this.setState({
       deck: newDeck,
-      pickedCards: newPickedCards //[]
+      pickedCards: newPickedCards
+  
     });
   }
 
+  //function unflipped card
+  unflipCards(card1Index, card2Index) {
+    const card1 = { ...this.state.deck[card1Index], isFlipped: false }
+    const card2 = { ...this.state.deck[card2Index], isFlipped: false }
+
+    const newDeck = this.state.deck.map((card, index) => {
+      if ( card1Index === index) return card1;
+      if (card2Index === index) return card2;
+      return card;
+    })
+    //unflip card state
+    this.setState({
+      deck: newDeck
+    })
+  }
 
   render() {
     const cardsJSX = this.state.deck.map((card, index) => {
